@@ -37,10 +37,10 @@ class AdminController extends Controller
                 return redirect()->back();
             }
         }
-  
+
     }
     public function home()
-    {    
+    {
         $room = Room::all();
         $gallery = Gallery::all();
         return view('home.index',compact('room','gallery'));
@@ -61,9 +61,9 @@ class AdminController extends Controller
         if($image){
             $imagename = time().'.'.$image->getClientOriginalExtension();
             $request->image->move('room',$imagename);
-            $data->image = $imagename; 
+            $data->image = $imagename;
 
-            
+
         }
         $data->save();
         return redirect()->back();
@@ -82,7 +82,7 @@ class AdminController extends Controller
     public function room_update( $id)
     {
         $data = Room::find($id);
-       
+
         return view('admin.update_room',compact('data'));
     }
     public function edit_room(Request $request, $id)
@@ -98,13 +98,62 @@ class AdminController extends Controller
         if($image){
             $imagename = time().'.'.$image->getClientOriginalExtension();
             $request->image->move('room',$imagename);
-            $data->image = $imagename; 
+            $data->image = $imagename;
 
-            
+
         }
         $data->save();
         return redirect()->back();
     }
-   
-   
+    public function bookings()
+    {
+        $data = Booking::all();
+        return view('admin.booking',compact('data'));
+    }
+    public function cancel_booking($id)
+    {
+        $data = Booking::find($id);
+        $data->delete();
+        return redirect()->back();
+    }
+    public function approve_booking($id)
+    {
+        $booking = Booking::find($id);
+        $booking->status = 'Approved';
+        $booking->save();
+        return redirect()->back();
+    }
+    public function reject_booking($id)
+    {
+        $booking = Booking::find($id);
+        $booking->status = 'Rejected';
+        $booking->save();
+        return redirect()->back();
+    }
+    public function view_gallery()
+    {
+        $gallery = Gallery::all();
+        return view('admin.gallery',compact('gallery'));
+    }
+    public function upload_gallery(Request $request)
+    {
+        $data = new Gallery;
+        $image=$request->image;
+        if($image){
+            $imagename = time().'.'.$image->getClientOriginalExtension();
+            $request->image->move('gallery',$imagename);
+            $data->image = $imagename;
+        }
+        $data->save();
+        return redirect()->back();
+    }
+    public function delete_gallery($id)
+    {
+        $data = Gallery::find($id);
+        $data->delete();
+        return redirect()->back();
+    }
+
+
+
 }

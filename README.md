@@ -19,3 +19,4 @@ let's give a breif of our features:
 16. the gallery appears for the user
 17. Contact Us is a feature of a customer can send a message to support 
 18. Admin Can send mail by just clicking on send email in messages in admin dashboard to reply on the inquiry
+19. Hosted this website on this link by infinity free : http://stayhub.wuaze.com/
